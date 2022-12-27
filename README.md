@@ -1,2 +1,3 @@
-# arma-extension-csharp
+# Arma-Extension-Csharp
 
+Arma Extension C# Example
