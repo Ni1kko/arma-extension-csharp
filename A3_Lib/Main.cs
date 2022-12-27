@@ -2,15 +2,24 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
+// ReSharper disable ConvertToConstant.Local
 
 namespace A3_Lib
 {
     public class Main
     {
-        private const string Version = "1.0.0";
-        private static Main _main;
-        
-         #region Arma3  (Version 1.61) - RVExtension The first stable version of this functionality arrived.
+        private static Main _main = null!;
+        private static bool _loaded;
+        private readonly string _version = "1.0.0";
+
+        public Main()
+        {
+            _loaded = true;
+            
+            _callback.Invoke("a3_lib", "init", "['test init callback']");
+        }
+
+        #region Arma3  (Version 1.61) - RVExtension The first stable version of this functionality arrived.
 #if IS_x64
         [DllExport("RVExtension", CallingConvention = CallingConvention.Winapi)]
 #else
@@ -21,7 +30,8 @@ namespace A3_Lib
             //outputSize--;
             try
             {
-                if (_main == null) _main = new Main();
+                if (_loaded) return "[Failure]";
+                _main = new Main();
                 output.Append(Invoke(function));
             }
             catch (Exception e)
@@ -44,7 +54,7 @@ namespace A3_Lib
             //outputSize--;
             try
             {
-                if (_main == null) return "[NotInitialized]";
+                if (!_loaded) return "[NotInitialized]";
                 output.Append(Invoke(function, args));
             }
             catch (Exception e)
@@ -65,7 +75,7 @@ namespace A3_Lib
         public static void RvExtensionVersion(StringBuilder output, int outputSize)
         {
             //outputSize--;
-            output.Append(Version);
+            output.Append(_main._version);
         }
         #endregion
 
@@ -78,7 +88,7 @@ namespace A3_Lib
         public static void RvExtensionRegisterCallback([MarshalAs(UnmanagedType.FunctionPtr)] ExtensionCallback func) => _callback = func;
         public delegate string ExtensionCallback([MarshalAs(UnmanagedType.LPStr)] string name, [MarshalAs(UnmanagedType.LPStr)] string function, [MarshalAs(UnmanagedType.LPStr)] string data);
 
-        private static ExtensionCallback _callback;
+        private static ExtensionCallback _callback = null!;
         #endregion
 
         #region Arma3  (Version 2.11) - RVExtensionContext became available. Passes steamID, fileSource, missionName, serverName
@@ -95,14 +105,14 @@ namespace A3_Lib
 
         private class ExtensionContext
         {
-            private string SteamId { get; set; }
-            private string FileSource { get; set; }
-            private string MissionName { get; set; }
-            private string ServerName { get; set; }
+            private string? SteamId { get; set; }
+            private string? FileSource { get; set; }
+            private string? MissionName { get; set; }
+            private string? ServerName { get; set; }
 
             public ExtensionContext(string args)
             {
-                var split = args.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                string?[] split = args.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                 if (split.Length != 4) return;
                 SteamId = split[0];
                 FileSource = split[1];
@@ -120,7 +130,7 @@ namespace A3_Lib
             switch (method)
             {
                 case "init": 
-                    return (_main == null ? "[Initialized]": "[Failure]");
+                    return (_loaded ? "[Initialized]": "[Failure]");
                 default:
                     return "[InvalidMethod]";
             } 

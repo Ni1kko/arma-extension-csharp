@@ -4,40 +4,40 @@
   <xs:element name="Weavers">
     <xs:complexType>
       <xs:all>
-        <xs:element name="Costura" minOccurs="0">
+        <xs:element name="Costura" minOccurs="0" maxOccurs="1">
           <xs:complexType>
             <xs:all>
-              <xs:element minOccurs="0" name="ExcludeAssemblies" type="xs:string">
+              <xs:element minOccurs="0" maxOccurs="1" name="ExcludeAssemblies" type="xs:string">
                 <xs:annotation>
                   <xs:documentation>A list of assembly names to exclude from the default action of "embed all Copy Local references", delimited with line breaks</xs:documentation>
                 </xs:annotation>
               </xs:element>
-              <xs:element minOccurs="0" name="IncludeAssemblies" type="xs:string">
+              <xs:element minOccurs="0" maxOccurs="1" name="IncludeAssemblies" type="xs:string">
                 <xs:annotation>
                   <xs:documentation>A list of assembly names to include from the default action of "embed all Copy Local references", delimited with line breaks.</xs:documentation>
                 </xs:annotation>
               </xs:element>
-              <xs:element minOccurs="0" name="ExcludeRuntimeAssemblies" type="xs:string">
+              <xs:element minOccurs="0" maxOccurs="1" name="ExcludeRuntimeAssemblies" type="xs:string">
                 <xs:annotation>
                   <xs:documentation>A list of runtime assembly names to exclude from the default action of "embed all Copy Local references", delimited with line breaks</xs:documentation>
                 </xs:annotation>
               </xs:element>
-              <xs:element minOccurs="0" name="IncludeRuntimeAssemblies" type="xs:string">
+              <xs:element minOccurs="0" maxOccurs="1" name="IncludeRuntimeAssemblies" type="xs:string">
                 <xs:annotation>
                   <xs:documentation>A list of runtime assembly names to include from the default action of "embed all Copy Local references", delimited with line breaks.</xs:documentation>
                 </xs:annotation>
               </xs:element>
-              <xs:element minOccurs="0" name="Unmanaged32Assemblies" type="xs:string">
+              <xs:element minOccurs="0" maxOccurs="1" name="Unmanaged32Assemblies" type="xs:string">
                 <xs:annotation>
                   <xs:documentation>A list of unmanaged 32 bit assembly names to include, delimited with line breaks.</xs:documentation>
                 </xs:annotation>
               </xs:element>
-              <xs:element minOccurs="0" name="Unmanaged64Assemblies" type="xs:string">
+              <xs:element minOccurs="0" maxOccurs="1" name="Unmanaged64Assemblies" type="xs:string">
                 <xs:annotation>
                   <xs:documentation>A list of unmanaged 64 bit assembly names to include, delimited with line breaks.</xs:documentation>
                 </xs:annotation>
               </xs:element>
-              <xs:element minOccurs="0" name="PreloadOrder" type="xs:string">
+              <xs:element minOccurs="0" maxOccurs="1" name="PreloadOrder" type="xs:string">
                 <xs:annotation>
                   <xs:documentation>The order of preloaded assemblies, delimited with line breaks.</xs:documentation>
                 </xs:annotation>
