@@ -86,9 +86,9 @@ namespace A3_Lib
         [DllExport("_RVExtensionRegisterCallback@4", CallingConvention = CallingConvention.Winapi)]
 #endif
         public static void RvExtensionRegisterCallback([MarshalAs(UnmanagedType.FunctionPtr)] ExtensionCallback func) => _callback = func;
-        public delegate string ExtensionCallback([MarshalAs(UnmanagedType.LPStr)] string name, [MarshalAs(UnmanagedType.LPStr)] string function, [MarshalAs(UnmanagedType.LPStr)] string data);
+        public delegate int ExtensionCallback([MarshalAs(UnmanagedType.LPStr)] string name, [MarshalAs(UnmanagedType.LPStr)] string function, [MarshalAs(UnmanagedType.LPStr)] string data);
 
-        private static ExtensionCallback _callback = null!;
+        public static ExtensionCallback _callback = null!;
         #endregion
 
         #region Arma3  (Version 2.11) - RVExtensionContext became available. Passes steamID, fileSource, missionName, serverName
